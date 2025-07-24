@@ -47,7 +47,7 @@ zeta = dispParam.paramTable.detuning(indiv_opt);
 
 if ismember('pumpPow', dispParam.paramTable.Properties.VariableNames)
     F0 = dispParam.paramTable.pumpPow(indiv_opt); % New version when pump power varied as well
-    F0 = F0 * [1,0];
+    % F0 = F0 * [1,0];
 end
 
 
@@ -156,12 +156,12 @@ t_evol = 500;
 h = 2^-10;
 Nstore = 2e3;
 z_start = -1;
-z_stop = (F0^2 + 2);
+z_stop = (F0.^2 + 2);
 zrate = abs(z_start - z_stop)/t_evol;
 zeta = @(t) z_start + (z_stop - z_start)  * t/t_evol;
 
 % initialize the seed
-psi0 = init_hom(zeta(1), F0^2, 1) * ones(1,N_modes);
+psi0 = init_hom(zeta(1), F0.^2, 1) * ones(1,N_modes);
 
 tic
 Psi_evol_fwd = LLE_Propagate_para(psi0.', F0, zeta, D, nf, t_evol, h, Nstore);
@@ -225,7 +225,7 @@ Psi_FB = [Psi_evol_fwd(:,1:restart_idx), Psi_evol_bckw];
 
 figure
 imagesc(abs(Psi_FB))
-colormap(morgenstemning)
+colormap(parula)
 vline(best_fit_idx, 'w')
 
 figure

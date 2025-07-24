@@ -12,7 +12,7 @@ if abs(X)==0
     return
 end
 
-R = roots([1, -2*D, (D^2+1), -X]);
+R = roots([1, -2*D, (D.^2+1), -X]);
 
 real_soln = abs(imag(R)./real(R))<1e-2;
 R = R(real_soln);
